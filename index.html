@@ -152,6 +152,133 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-函数式编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/01/27/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a>
+    </h1>
+  
+
+        
+        <a href="/2022/01/27/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2022-01-27T15:41:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.liaoxuefeng.com/">www.liaoxuefeng.com</a></p>
+</blockquote>
+<h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><h3 id="map-reduce"><a href="#map-reduce" class="headerlink" title="map/reduce"></a>map/reduce</h3><p><u>map()第一个参数为函数指针，第二个是<code>Iterable</code></u></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">x</span>):</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x * x</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = <span class="built_in">map</span>(f, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(r)	<span class="comment">#list()函数把整个序列都计算出来并返回一个list</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>, <span class="number">36</span>, <span class="number">49</span>, <span class="number">64</span>, <span class="number">81</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">str</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]))</span><br><span class="line">[<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;8&#x27;</span>, <span class="string">&#x27;9&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p><u>reduce()函数</u></p>
+<p><code>reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">fn</span>(<span class="params">x, y</span>):</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x * <span class="number">10</span> + y</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(fn, [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>])</span><br><span class="line"><span class="number">13579</span></span><br></pre></td></tr></table></figure>
+
+<p>eg. str转int</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"></span><br><span class="line">DIGITS = &#123;<span class="string">&#x27;0&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;1&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;2&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>: <span class="number">3</span>, <span class="string">&#x27;4&#x27;</span>: <span class="number">4</span>, <span class="string">&#x27;5&#x27;</span>: <span class="number">5</span>, <span class="string">&#x27;6&#x27;</span>: <span class="number">6</span>, <span class="string">&#x27;7&#x27;</span>: <span class="number">7</span>, <span class="string">&#x27;8&#x27;</span>: <span class="number">8</span>, <span class="string">&#x27;9&#x27;</span>: <span class="number">9</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数嵌套！！！这不比C++好用？？？</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">str2int</span>(<span class="params">s</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fn</span>(<span class="params">x,y</span>):</span></span><br><span class="line">        <span class="keyword">return</span> x*<span class="number">10</span>+y</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">char2num</span>(<span class="params">s</span>):</span></span><br><span class="line">        <span class="keyword">return</span> DIGITS[s]</span><br><span class="line">    <span class="keyword">return</span> reduce(fn, <span class="built_in">map</span>(char2num,s))</span><br></pre></td></tr></table></figure>
+
+<p>eg.str转float</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">str2float</span>(<span class="params">s</span>):</span></span><br><span class="line">    DIGITS = &#123;<span class="string">&#x27;0&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;1&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;2&#x27;</span>: <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>: <span class="number">3</span>, <span class="string">&#x27;4&#x27;</span>: <span class="number">4</span>, <span class="string">&#x27;5&#x27;</span>: <span class="number">5</span>, <span class="string">&#x27;6&#x27;</span>: <span class="number">6</span>, <span class="string">&#x27;7&#x27;</span>: <span class="number">7</span>, <span class="string">&#x27;8&#x27;</span>: <span class="number">8</span>, <span class="string">&#x27;9&#x27;</span>: <span class="number">9</span>&#125;</span><br><span class="line">    index = s.find(<span class="string">&#x27;.&#x27;</span>) <span class="comment">#找到&#x27;.&#x27;的位置从左往右数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">char2num</span>(<span class="params">s</span>):</span></span><br><span class="line">        <span class="keyword">return</span> DIGITS[s]</span><br><span class="line">    to_int = reduce(<span class="keyword">lambda</span> x,y:x*<span class="number">10</span>+y, <span class="built_in">map</span>(char2num, s.replace(<span class="string">&#x27;.&#x27;</span>,<span class="string">&#x27;&#x27;</span>))) <span class="comment">#str类的方法replace删去&#x27;.&#x27;生成新str</span></span><br><span class="line">    <span class="keyword">return</span> to_int*(<span class="number">10</span>**(index-<span class="built_in">len</span>(s)+<span class="number">1</span>)) <span class="comment">#len-index+1为小数点后尾数</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><ol>
+<li>装饰，去wrap the function!</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_new_decorator</span>(<span class="params">a_func</span>):</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapTheFunction</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;执行前的工作&quot;</span>)</span><br><span class="line"> </span><br><span class="line">        a_func()</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;work after executing&quot;</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> wrapTheFunction</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_func_requiring_decoration</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;执行需要修饰的函数&quot;</span>)</span><br><span class="line"> </span><br><span class="line">a_func_requiring_decoration = a_new_decorator(a_func_requiring_decoration)</span><br><span class="line"><span class="comment">#now a_function_requiring_decoration is wrapped by wrapTheFunction()</span></span><br><span class="line"> </span><br><span class="line">a_func_requiring_decoration()</span><br><span class="line"><span class="comment">#outputs:执行前的工作</span></span><br><span class="line"><span class="comment">#        执行需要修饰的函数</span></span><br><span class="line"><span class="comment">#        work after executing</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@让一切更简单</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_new_decorator</span>(<span class="params">a_func</span>):</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapTheFunction</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;执行前的工作&quot;</span>)</span><br><span class="line"> </span><br><span class="line">        a_func()</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;work after executing&quot;</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> wrapTheFunction</span><br><span class="line"></span><br><span class="line"><span class="meta">@a_new_decorator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_func_requiring_decoration</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;执行需要修饰的函数&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>functools.wraps使名字不会改变为wrapTheFunction</p>
+<blockquote>
+<p><strong>@wraps</strong>接受一个函数来进行装饰，并加入了复制函数名称、注释文档、参数列表等等的功能。这可以让我们在装饰器里面访问在装饰之前的函数的属性。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_new_decorator</span>(<span class="params">a_func</span>):</span></span><br><span class="line"><span class="meta">	@wraps(<span class="params">a_func</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapTheFunction</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;执行前的工作&quot;</span>)</span><br><span class="line"> </span><br><span class="line">        a_func()</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;work after executing&quot;</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> wrapTheFunction</span><br><span class="line"></span><br><span class="line"><span class="meta">@a_new_decorator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_func_requiring_decoration</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;执行需要修饰的函数&quot;</span>)</span><br><span class="line">    </span><br><span class="line"><span class="built_in">print</span>(a_function_requiring_decoration.__name__)</span><br><span class="line"><span class="comment"># Output: a_function_requiring_decoration</span></span><br><span class="line"><span class="comment"># 否则就是 wrapTheFunction</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="偏函数partial"><a href="#偏函数partial" class="headerlink" title="偏函数partial"></a>偏函数partial</h2><p>eg：int(x,base)将base进制数转换为10进制数</p>
+<p>定义2进制转换为10进制</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">int2</span>(<span class="params">x, base=<span class="number">2</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(x, base)</span><br></pre></td></tr></table></figure>
+
+<p>等价于</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> partical</span><br><span class="line">int2 = partial(<span class="built_in">int</span>,base=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line">int2 = functools.partial(<span class="built_in">int</span>, base=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<blockquote>
+<p>后记，这部分真的浪费了好多时间，其中一个原因是过年，更重要的还是，自己有时间的时候浪费时间了……假期还长，诸君共勉</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">高阶函数，返回函数，匿名函数，装饰器，偏函</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/01/27/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python高级特性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -536,6 +663,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">切片，迭代，列表生成，生成器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">高阶函数，返回函数，匿名函数，装饰器，偏函</a>
               </li>
             
             <div class="clearfix"></div>
